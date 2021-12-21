@@ -27,7 +27,8 @@ export async function getStaticPaths() {
     const meetups = await meetupsCollection.find({}, {_id: 1}).toArray()
 
     return {
-        fallback: false,
+        fallback: 'blocking', // here fallback setting to true will immediately return an empty page and then regenerate when data comes back and we have to handle it here.
+        // so we use blocking as it has no work to be done here.
         paths: meetups.map((meetup) => ({
             params: { meetupId: meetup._id.toString() },
         })),
